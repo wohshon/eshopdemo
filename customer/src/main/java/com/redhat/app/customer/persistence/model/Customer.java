@@ -3,12 +3,14 @@ package com.redhat.app.customer.persistence.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.springframework.stereotype.Component;
@@ -34,8 +36,11 @@ public class Customer {
     private String phone;
     private Date registeredOn;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Address> addresses;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Set<PaymentInfo> paymentInfos;
 
     @Override
     public String toString() {

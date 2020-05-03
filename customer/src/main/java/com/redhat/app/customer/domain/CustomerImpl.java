@@ -1,10 +1,14 @@
 package com.redhat.app.customer.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import com.redhat.app.customer.domain.model.CustomerDomainObject;
 import com.redhat.app.customer.domain.model.CustomerRegisterObject;
 import com.redhat.app.customer.persistence.CustomerRepository;
+import com.redhat.app.customer.persistence.model.Address;
 import com.redhat.app.customer.persistence.model.Customer;
 
 import org.slf4j.Logger;
@@ -55,13 +59,27 @@ CustomerRepository customerRepository;
             saveCust.setName(cro.getName());
             saveCust.setEmail(cro.getEmail());
             saveCust.setPhone(cro.getPhone());
+            Iterator<Address> itr = cro.getAddresses().iterator();
+            //Set<Address> saveAddrSet= new HashSet<Address>();
+            while (itr.hasNext()) {
+                log.info("update cust to address "+saveCust.getName());
+                itr.next().setCustomer(saveCust);
+                //Address addr= itr.next();
+                //addr.setCustomer(saveCust);
+                //saveAddrSet.add(addr);
+                //saveCust.setAddresses(saveAddrSet);
+            }
+            saveCust.setAddresses(cro.getAddresses());
         }
 
         return saveCust; 
     }
     @Override
-    public void updateParticulars() {
-        // TODO Auto-generated method stub
+    public void updateParticulars(CustomerDomainObject dto) {
+        //get entity
+        Customer cust = customerRepository.findByEmail(dto.getEmail()).get(0);
+        log.info("found "+cust.getName());
+        
         
     }
     @Override

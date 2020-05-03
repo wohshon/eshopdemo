@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.redhat.app.customer.domain.model.CustomerDomainObject;
 import com.redhat.app.customer.domain.model.CustomerRegisterObject;
+
+import java.util.Iterator;
+
 import com.redhat.app.customer.domain.CustomerService;
 import com.redhat.app.customer.persistence.model.Customer;
 
@@ -39,10 +42,21 @@ public class CustomerController {
     public void register(@RequestBody CustomerRegisterObject cust) {
         log.info("customer "+cust.getId());
         log.info("customer "+cust.getName());
+        log.info("customer addr "+cust.getAddresses().size());
+        log.info("customer payment "+cust.getPaymentInfos().size());
+        
         log.info("customer "+cust);
         
         customer.register((CustomerDomainObject)cust);
     }
     
-
+    @PostMapping(value="/update", consumes = "application/json")
+    public void update(@RequestBody CustomerRegisterObject cust) {
+        log.info("customer "+cust.getId());
+        log.info("customer "+cust.getName());
+        log.info("customer addr "+cust.getAddresses().size());
+        log.info("customer "+cust);
+        
+        customer.updateParticulars((CustomerDomainObject)cust);
+    }
 }

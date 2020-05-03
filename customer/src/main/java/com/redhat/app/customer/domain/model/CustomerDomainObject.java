@@ -1,5 +1,10 @@
 package com.redhat.app.customer.domain.model;
 
+import java.util.Set;
+
+import com.redhat.app.customer.persistence.model.Address;
+import com.redhat.app.customer.persistence.model.PaymentInfo;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +15,9 @@ public class CustomerDomainObject {
     private String name;
     private String email;
     private String phone;
+    private Set<Address> addresses;
+    private Set<PaymentInfo> paymentInfos;
+
     
     @Override
     public String toString() {
